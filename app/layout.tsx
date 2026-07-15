@@ -14,6 +14,11 @@ const unifraktur = UnifrakturMaguntia({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(
+    process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : "http://localhost:3000"
+  ),
   title: "Stubbs' Rugs | Custom Hand-Tufted Rugs",
   description:
     "Custom hand-tufted rugs made to order. Sports, automotive, pop culture, and die-cut designs by Stubbs' Rugs.",
