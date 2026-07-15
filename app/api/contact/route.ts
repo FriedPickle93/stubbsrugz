@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { Resend } from "resend";
+import nodemailer from "nodemailer";
 import { z } from "zod";
 import { SITE_EMAIL, SITE_NAME } from "@/lib/constants";
 
@@ -34,51 +34,39 @@ function buildEmailBody(data: z.infer<typeof contactSchema>) {
   return lines.join("\n");
 }
 
-function buildEmailHtml(data: z.infer<typeof contactSchema>) {
-  const referenceLine = data.referenceFileName
-    ? `<p><strong>Reference file:</strong> ${data.referenceFileName}</p>`
-    : "";
-
-  return `
-    <h2>New custom rug order</h2>
-    <p><strong>Name:</strong> ${data.name}</p>
-    <p><strong>Email:</strong> ${data.email}</p>
-    <p><strong>Phone:</strong> ${data.phone}</p>
-    <p><strong>Desired size:</strong> ${data.size}</p>
-    <p><strong>Budget:</strong> ${data.budget}</p>
-    <p><strong>Project description:</strong></p>
-    <p>${data.description.replace(/\n/g, "<br>")}</p>
-    ${referenceLine}
-  `;
-}
-
 export async function POST(request: Request) {
-  const contactEmail = process.env.CONTACT_EMAIL ?? SITE_EMAIL;
-  const resendApiKey = process.env.RESEND_API_KEY;
-
-  if (!resendApiKey) {
-    return NextResponse.json(
-      {
-        error: "Order email is not configured yet. Please email us directly.",
-        code: "UNCONFIGURED",
-      },
-      { status: 503 }
-    );
-  }
-
   try {
     const body = await request.json();
     const data = contactSchema.parse(body);
 
-    const resend = new Resend(resendApiKey);
+    const smtpUser = process.env.SMTP_USER;
+    const smtpPass = process.env.SMTP_PASS;
 
-    await resend.emails.send({
-      from: `${SITE_NAME} <onboarding@resend.dev>`,
-      to: contactEmail,
+    if (!smtpUser || !smtpPass) {
+      console.error("Contact form: SMTP_USER or SMTP_PASS is not configured");
+      return NextResponse.json(
+        {
+          error: "Order email is not configured yet. Please email us directly.",
+          code: "UNCONFIGURED",
+        },
+        { status: 503 }
+      );
+    }
+
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: smtpUser,
+        pass: smtpPass,
+      },
+    });
+
+    await transporter.sendMail({
+      from: `"${SITE_NAME}" <${smtpUser}>`,
+      to: SITE_EMAIL,
       replyTo: data.email,
       subject: `New Rug Order — ${data.name}`,
       text: buildEmailBody(data),
-      html: buildEmailHtml(data),
     });
 
     return NextResponse.json({ success: true });
