@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Reveal } from "@/components/shared/motion";
-import { BrandMascot } from "@/components/brand/brand-mascot";
+import { BrandLogo } from "@/components/brand/brand-logo";
 import { Button } from "@/components/ui/button";
 import { QUOTE_CTA } from "@/lib/constants";
 
@@ -21,13 +21,13 @@ export function CTASection() {
                 Send your idea, size, and references — we&apos;ll respond with
                 next steps and a personalized quote.
               </p>
-              <Button variant="blue" size="lg" className="mt-8" asChild>
+              <Button variant="gold" size="lg" className="mt-8" asChild>
                 <Link href="/contact">{QUOTE_CTA}</Link>
               </Button>
             </div>
             <div className="flex justify-center">
-              <div className="brand-glow rounded-2xl border border-blue/20 bg-surface p-4">
-                <BrandMascot size="lg" animated />
+              <div className="brand-glow rounded-full border border-gold/20 bg-surface p-4">
+                <BrandLogo size="lg" animated />
               </div>
             </div>
           </div>

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Reveal } from "@/components/shared/motion";
-import { BrandMascot } from "@/components/brand/brand-mascot";
+import { BrandLogo } from "@/components/brand/brand-logo";
 import { Button } from "@/components/ui/button";
 import {
   GET_QUOTE_CTA,
@@ -32,15 +32,15 @@ export default function PricingPage() {
           </p>
         </Reveal>
         <Reveal delay={0.1} className="hidden lg:block">
-          <BrandMascot size="lg" animated />
+          <BrandLogo size="lg" animated />
         </Reveal>
       </div>
 
       <div className="mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {PRICING_TIERS.map((tier, i) => (
           <Reveal key={tier.size} delay={i * 0.08}>
-            <div className="flex h-full flex-col border border-border bg-surface p-8 transition-colors hover:border-blue/40">
-              <p className="text-xs font-semibold uppercase tracking-widest text-blue">
+            <div className="flex h-full flex-col border border-border bg-surface p-8 transition-colors hover:border-gold/40">
+              <p className="text-xs font-semibold uppercase tracking-widest text-gold">
                 {tier.size}
               </p>
               <p className="mt-4 font-display text-3xl tracking-wide text-cream">
@@ -75,7 +75,7 @@ export default function PricingPage() {
           Send your idea, size, and references — we&apos;ll respond with next
           steps and a personalized estimate.
         </p>
-        <Button variant="blue" size="lg" className="mt-8" asChild>
+        <Button variant="gold" size="lg" className="mt-8" asChild>
           <Link href="/contact">{GET_QUOTE_CTA}</Link>
         </Button>
       </Reveal>

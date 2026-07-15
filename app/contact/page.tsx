@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Reveal } from "@/components/shared/motion";
-import { BrandMascot } from "@/components/brand/brand-mascot";
+import { BrandLogo } from "@/components/brand/brand-logo";
 import { ContactForm } from "@/components/contact/contact-form";
 import {
   CASH_APP,
@@ -23,7 +23,7 @@ export default function ContactPage() {
     <div className="section-padding mx-auto max-w-7xl pt-24">
       <div className="grid gap-16 lg:grid-cols-2">
         <Reveal>
-          <p className="text-xs font-semibold uppercase tracking-[0.4em] text-blue">
+          <p className="text-xs font-semibold uppercase tracking-[0.4em] text-gold">
             Commission · {SITE_LOCATION}
           </p>
           <h1 className="mt-3 font-display text-5xl tracking-wide text-cream sm:text-6xl">
@@ -36,23 +36,23 @@ export default function ContactPage() {
           </p>
 
           <div className="mt-8 flex items-start gap-4">
-            <BrandMascot size="md" animated className="shrink-0" />
+            <BrandLogo size="md" animated className="shrink-0" />
             <div className="space-y-3 text-sm text-muted-foreground">
               <p>
                 <span className="text-cream">Email:</span>{" "}
-                <a href={`mailto:${SITE_EMAIL}`} className="hover:text-blue">
+                <a href={`mailto:${SITE_EMAIL}`} className="hover:text-gold">
                   {SITE_EMAIL}
                 </a>
               </p>
               <p>
                 <span className="text-cream">Phone:</span>{" "}
-                <a href={`tel:${SITE_PHONE.replace(/\D/g, "")}`} className="hover:text-blue">
+                <a href={`tel:${SITE_PHONE.replace(/\D/g, "")}`} className="hover:text-gold">
                   {SITE_PHONE}
                 </a>
               </p>
               <p>
                 <span className="text-cream">Instagram:</span>{" "}
-                <a href="#" className="hover:text-blue">
+                <a href="#" className="hover:text-gold">
                   {SITE_INSTAGRAM}
                 </a>
               </p>

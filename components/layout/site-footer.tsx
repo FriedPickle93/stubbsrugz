@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { BrandLogo } from "@/components/brand/brand-logo";
-import { BrandMascot } from "@/components/brand/brand-mascot";
 import {
   CASH_APP,
   NAV_LINKS,
@@ -10,6 +9,7 @@ import {
   SITE_LOCATION,
   SITE_NAME,
   SITE_PHONE,
+  SITE_TAGLINE,
 } from "@/lib/constants";
 
 export function SiteFooter() {
@@ -18,15 +18,10 @@ export function SiteFooter() {
       <div className="section-padding mx-auto max-w-7xl">
         <div className="grid gap-12 lg:grid-cols-[1.2fr_1fr_1fr]">
           <div>
-            <BrandLogo stacked size="lg" />
+            <BrandLogo size="md" />
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-muted-foreground">
-              Custom hand-tufted rug studio. We make bold one-of-one pieces —
-              sports teams, automotive, pop culture, die-cut shapes, and fully
-              custom commissions you can hang or walk on.
+              {SITE_TAGLINE}
             </p>
-            <div className="mt-6">
-              <BrandMascot size="md" animated />
-            </div>
           </div>
 
           <div>
@@ -36,17 +31,17 @@ export function SiteFooter() {
             <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
               <li>{SITE_LOCATION}</li>
               <li>
-                <a href={`mailto:${SITE_EMAIL}`} className="hover:text-blue">
+                <a href={`mailto:${SITE_EMAIL}`} className="hover:text-gold">
                   {SITE_EMAIL}
                 </a>
               </li>
               <li>
-                <a href={`tel:${SITE_PHONE.replace(/\D/g, "")}`} className="hover:text-blue">
+                <a href={`tel:${SITE_PHONE.replace(/\D/g, "")}`} className="hover:text-gold">
                   {SITE_PHONE}
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-blue">
+                <a href="#" className="hover:text-gold">
                   {SITE_INSTAGRAM}
                 </a>
               </li>

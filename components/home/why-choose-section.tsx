@@ -6,7 +6,7 @@ export function WhyChooseSection() {
     <section className="section-padding border-t border-border bg-background">
       <div className="mx-auto max-w-7xl">
         <Reveal>
-          <p className="text-xs font-semibold uppercase tracking-[0.4em] text-blue">
+          <p className="text-xs font-semibold uppercase tracking-[0.4em] text-gold">
             Why Stubbs&apos;
           </p>
           <h2 className="mt-3 font-display text-5xl tracking-wide text-cream sm:text-6xl">

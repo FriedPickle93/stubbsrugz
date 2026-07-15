@@ -30,14 +30,14 @@ export const metadata: Metadata = {
       : "https://stubbsrugz.vercel.app"
   ),
   title: {
-    default: `${SITE_NAME} | Custom Hand-Tufted Rugs`,
+    default: `${SITE_NAME} | Handcrafted Custom Rugs`,
     template: `%s | ${SITE_NAME}`,
   },
   description: SITE_TAGLINE,
   openGraph: {
     title: `${SITE_NAME} | Custom Hand-Tufted Rugs`,
     description: SITE_TAGLINE,
-    images: ["/images/logo.jpg"],
+    images: ["/images/logo.png"],
   },
 };
 

@@ -87,7 +87,7 @@
   }
 
   .brand-glow {
-    box-shadow: 0 0 40px color-mix(in srgb, var(--blue) 30%, transparent);
+    box-shadow: 0 0 40px color-mix(in srgb, var(--gold) 25%, transparent);
   }
 
   .noise-overlay {

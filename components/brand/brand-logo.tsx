@@ -1,60 +1,43 @@
+import Image from "next/image";
 import { cn } from "@/lib/utils";
-import { SITE_NAME_BLOCK, SITE_NAME_SCRIPT } from "@/lib/constants";
+import { BRAND_LOGO, SITE_NAME } from "@/lib/constants";
 
 type BrandLogoProps = {
   className?: string;
-  size?: "sm" | "md" | "lg";
-  stacked?: boolean;
+  size?: "xs" | "sm" | "md" | "lg" | "xl";
+  animated?: boolean;
+};
+
+const dimensions = {
+  xs: "h-10 w-10",
+  sm: "h-14 w-14",
+  md: "h-20 w-20 sm:h-24 sm:w-24",
+  lg: "h-32 w-32 sm:h-40 sm:w-40",
+  xl: "h-48 w-48 sm:h-56 sm:w-56",
 };
 
 export function BrandLogo({
   className,
   size = "md",
-  stacked = false,
+  animated = false,
 }: BrandLogoProps) {
-  const scriptSize = {
-    sm: "text-xl",
-    md: "text-2xl sm:text-3xl",
-    lg: "text-3xl sm:text-4xl",
-  }[size];
-
-  const blockSize = {
-    sm: "text-lg",
-    md: "text-xl sm:text-2xl",
-    lg: "text-2xl sm:text-3xl",
-  }[size];
-
-  if (stacked) {
-    return (
-      <div className={cn("leading-none", className)}>
-        <span className={cn("font-script text-gold drop-shadow-sm", scriptSize)}>
-          {SITE_NAME_SCRIPT}
-        </span>
-        <span
-          className={cn(
-            "mt-1 block font-display tracking-[0.2em] text-blue",
-            blockSize
-          )}
-        >
-          {SITE_NAME_BLOCK.toUpperCase()}
-        </span>
-      </div>
-    );
-  }
-
   return (
-    <span
+    <div
       className={cn(
-        "inline-flex flex-wrap items-baseline gap-x-2 leading-none",
+        "relative shrink-0 overflow-hidden rounded-full",
+        dimensions[size],
+        animated && "animate-[float_4s_ease-in-out_infinite]",
         className
       )}
     >
-      <span className={cn("font-script text-gold", scriptSize)}>
-        {SITE_NAME_SCRIPT}
-      </span>
-      <span className={cn("font-display tracking-[0.15em] text-blue", blockSize)}>
-        {SITE_NAME_BLOCK.toUpperCase()}
-      </span>
-    </span>
+      <Image
+        src={BRAND_LOGO}
+        alt={`${SITE_NAME} logo`}
+        fill
+        className="object-cover"
+        sizes="256px"
+        priority={size === "lg" || size === "xl"}
+      />
+    </div>
   );
 }

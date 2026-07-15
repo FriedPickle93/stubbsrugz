@@ -18,8 +18,8 @@ export function ProcessSection() {
           {PROCESS_STEPS.map((step, i) => (
             <Reveal key={step.step} delay={i * 0.08} className="shrink-0">
               <div className="w-[280px] snap-start sm:w-[320px]">
-                <div className="border border-border bg-surface p-6 transition-colors hover:border-blue/50">
-                  <span className="font-display text-4xl text-blue">{step.step}</span>
+                <div className="border border-border bg-surface p-6 transition-colors hover:border-gold/50">
+                  <span className="font-display text-4xl text-gold">{step.step}</span>
                   <h3 className="mt-4 font-display text-2xl tracking-wide text-cream">
                     {step.title.toUpperCase()}
                   </h3>

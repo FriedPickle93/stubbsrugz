@@ -14,7 +14,7 @@ export default function GalleryPage() {
   return (
     <div className="section-padding mx-auto max-w-7xl pt-24">
       <Reveal>
-        <p className="text-xs font-semibold uppercase tracking-[0.4em] text-blue">
+        <p className="text-xs font-semibold uppercase tracking-[0.4em] text-gold">
           Portfolio
         </p>
         <h1 className="mt-3 font-display text-5xl tracking-wide text-cream sm:text-7xl">

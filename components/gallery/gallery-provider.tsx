@@ -36,7 +36,7 @@ export function GalleryProvider({ children }: { children: React.ReactNode }) {
           <button
             type="button"
             onClick={() => setActive(null)}
-            className="absolute right-6 top-6 rounded-none border border-border px-4 py-2 text-sm text-cream hover:border-blue"
+            className="absolute right-6 top-6 rounded-none border border-border px-4 py-2 text-sm text-cream hover:border-gold"
           >
             <X className="inline h-4 w-4" /> Close
           </button>

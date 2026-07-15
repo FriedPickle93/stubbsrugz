@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { BrandLogo } from "@/components/brand/brand-logo";
-import { BrandMascot } from "@/components/brand/brand-mascot";
 import { NAV_LINKS, PRIMARY_CTA } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
@@ -32,9 +31,8 @@ export function SiteHeader() {
       )}
     >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-10">
-        <Link href="/" className="flex items-center gap-3">
-          <BrandMascot size="xs" className="hidden sm:block" />
-          <BrandLogo size="sm" stacked />
+        <Link href="/" className="flex items-center">
+          <BrandLogo size="sm" />
         </Link>
 
         <nav className="hidden items-center gap-10 md:flex" aria-label="Main">
@@ -50,7 +48,7 @@ export function SiteHeader() {
         </nav>
 
         <div className="flex items-center gap-3">
-          <Button variant="blue" size="sm" className="hidden sm:inline-flex" asChild>
+          <Button variant="gold" size="sm" className="hidden sm:inline-flex" asChild>
             <Link href="/contact">{PRIMARY_CTA}</Link>
           </Button>
 
@@ -69,7 +67,7 @@ export function SiteHeader() {
       {menuOpen && (
         <div className="border-t border-border bg-background px-4 py-6 md:hidden">
           <div className="flex justify-center">
-            <BrandMascot size="md" animated />
+            <BrandLogo size="md" animated />
           </div>
           <nav className="mt-6 flex flex-col gap-4">
             {NAV_LINKS.map((link) => (
@@ -82,7 +80,7 @@ export function SiteHeader() {
                 {link.label.toUpperCase()}
               </Link>
             ))}
-            <Button variant="blue" asChild>
+            <Button variant="gold" asChild>
               <Link href="/contact" onClick={() => setMenuOpen(false)}>
                 {PRIMARY_CTA}
               </Link>

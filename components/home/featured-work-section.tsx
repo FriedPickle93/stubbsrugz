@@ -18,7 +18,7 @@ export function FeaturedWorkSection({ projects }: FeaturedWorkSectionProps) {
         <Reveal>
           <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.4em] text-blue">
+              <p className="text-xs font-semibold uppercase tracking-[0.4em] text-gold">
                 Portfolio
               </p>
               <h2 className="mt-3 font-display text-5xl tracking-wide text-cream sm:text-6xl">

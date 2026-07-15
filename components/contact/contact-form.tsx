@@ -64,7 +64,7 @@ export function ContactForm() {
           name="name"
           type="text"
           required
-          className="w-full border border-border bg-background px-4 py-3 text-cream placeholder:text-muted-foreground focus:border-blue focus:outline-none"
+          className="w-full border border-border bg-background px-4 py-3 text-cream placeholder:text-muted-foreground focus:border-gold focus:outline-none"
           placeholder="Your name"
         />
       </div>
@@ -78,7 +78,7 @@ export function ContactForm() {
           name="email"
           type="email"
           required
-          className="w-full border border-border bg-background px-4 py-3 text-cream placeholder:text-muted-foreground focus:border-blue focus:outline-none"
+          className="w-full border border-border bg-background px-4 py-3 text-cream placeholder:text-muted-foreground focus:border-gold focus:outline-none"
           placeholder="you@example.com"
         />
       </div>
@@ -91,7 +91,7 @@ export function ContactForm() {
           id="rugType"
           name="rugType"
           type="text"
-          className="w-full border border-border bg-background px-4 py-3 text-cream placeholder:text-muted-foreground focus:border-blue focus:outline-none"
+          className="w-full border border-border bg-background px-4 py-3 text-cream placeholder:text-muted-foreground focus:border-gold focus:outline-none"
           placeholder="e.g. Saints logo, car mat, custom shape"
         />
       </div>
@@ -103,7 +103,7 @@ export function ContactForm() {
         <select
           id="budget"
           name="budget"
-          className="w-full border border-border bg-background px-4 py-3 text-cream focus:border-blue focus:outline-none"
+          className="w-full border border-border bg-background px-4 py-3 text-cream focus:border-gold focus:outline-none"
         >
           <option value="">Select a range</option>
           {BUDGET_RANGES.map((range) => (
@@ -123,7 +123,7 @@ export function ContactForm() {
           name="message"
           required
           rows={5}
-          className="w-full resize-none border border-border bg-background px-4 py-3 text-cream placeholder:text-muted-foreground focus:border-blue focus:outline-none"
+          className="w-full resize-none border border-border bg-background px-4 py-3 text-cream placeholder:text-muted-foreground focus:border-gold focus:outline-none"
           placeholder="Describe your design, size, colors, or any questions..."
         />
       </div>
@@ -131,7 +131,7 @@ export function ContactForm() {
       <button
         type="submit"
         disabled={status === "loading"}
-        className="w-full border border-blue bg-blue px-8 py-4 text-sm font-semibold uppercase tracking-widest text-background transition-all hover:bg-blue/90 disabled:cursor-not-allowed disabled:opacity-60"
+        className="w-full border border-gold bg-gold px-8 py-4 text-sm font-semibold uppercase tracking-widest text-background transition-all hover:bg-gold/90 disabled:cursor-not-allowed disabled:opacity-60"
       >
         {status === "loading" ? "Sending..." : "Send Message"}
       </button>
