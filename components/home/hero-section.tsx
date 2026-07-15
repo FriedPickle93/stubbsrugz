@@ -44,7 +44,7 @@ export function HeroSection({ featuredProjects }: HeroSectionProps) {
         >
           <Image
             src={current.image}
-            alt={current.title}
+            alt="Custom tufted rug by Stubbs' Rugz"
             fill
             priority
             className="object-cover"
@@ -107,7 +107,7 @@ export function HeroSection({ featuredProjects }: HeroSectionProps) {
               <button
                 key={p.slug}
                 type="button"
-                aria-label={`Show ${p.title}`}
+                aria-label={`Show rug ${i + 1}`}
                 onClick={() => setIndex(i)}
                 className={`h-1 transition-all ${
                   i === index ? "w-10 bg-gold" : "w-4 bg-border hover:bg-gold/50"

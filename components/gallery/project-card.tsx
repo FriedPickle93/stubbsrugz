@@ -39,12 +39,12 @@ export function ProjectCard({
         type="button"
         onClick={() => openLightbox(project)}
         className="relative w-full overflow-hidden rounded-none text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue"
-        aria-label={`View ${project.title}`}
+        aria-label={`View rug — ${project.size}, ${project.price}`}
       >
         <div className={cn("relative w-full bg-surface", aspectClass)}>
           <Image
             src={project.image}
-            alt={project.title}
+            alt="Custom tufted rug by Stubbs' Rugz"
             fill
             sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 33vw"
             className="object-cover transition-transform duration-700 group-hover:scale-105"
@@ -53,10 +53,7 @@ export function ProjectCard({
           <div className="absolute inset-0 bg-black/0 transition-colors duration-500 group-hover:bg-black/40" />
         </div>
         <div className="absolute inset-x-0 bottom-0 translate-y-full bg-gradient-to-t from-black via-black/90 to-transparent p-4 transition-transform duration-500 group-hover:translate-y-0">
-          <h3 className="font-display text-xl tracking-wide text-cream">
-            {project.title.toUpperCase()}
-          </h3>
-          <p className="text-xs text-muted-foreground">
+          <p className="font-display text-lg tracking-wide text-cream">
             {project.size} · {project.price}
           </p>
         </div>

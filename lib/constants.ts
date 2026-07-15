@@ -85,25 +85,16 @@ export const PRICING_TIERS = [
 ] as const;
 
 export const BUDGET_RANGES = [
-  "Under $175",
-  "$175 – $300",
-  "$300 – $500",
+  "Under $225",
+  "$225 – $400",
+  "$400 – $500",
   "$500+",
   "Not sure yet",
 ] as const;
 
-export const PAYMENT_METHODS = ["Cash App", "Apple Pay", "Zelle"] as const;
+export const RUG_SIZES = ["2 ft", "3 ft", "4 ft", "5 ft", "Custom size"] as const;
 
-export const PROJECT_CATEGORIES = [
-  "Sports Rug",
-  "Anime Rug",
-  "Business Logo Rug",
-  "Cartoon Rug",
-  "Custom Artwork Rug",
-  "Name Rug",
-  "Automotive Rug",
-  "Graduation Rug",
-] as const;
+export const PAYMENT_METHODS = ["Cash App", "Apple Pay", "Zelle"] as const;
 
 export const SIZE_PRICE_MAP: Record<string, string> = {
   "2 ft": "$120 & Up",

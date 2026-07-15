@@ -1,157 +1,257 @@
 "use client";
 
-import { FormEvent, useState } from "react";
-import { BUDGET_RANGES } from "@/lib/constants";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { motion } from "framer-motion";
+import { Upload, CheckCircle2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  BUDGET_RANGES,
+  RUG_SIZES,
+  SITE_EMAIL,
+} from "@/lib/constants";
+import { cn } from "@/lib/utils";
 
-type FormStatus = "idle" | "loading" | "success" | "error" | "unconfigured";
+const contactSchema = z.object({
+  name: z.string().min(2, "Name is required"),
+  email: z.string().email("Valid email required"),
+  phone: z.string().min(7, "Phone is required"),
+  size: z.string().min(1, "Select a size"),
+  description: z.string().min(10, "Tell us about your project"),
+  budget: z.string().min(1, "Select a budget range"),
+});
+
+type ContactFormValues = z.infer<typeof contactSchema>;
+
+const fieldClass =
+  "w-full border border-border bg-background px-4 py-3 text-cream placeholder:text-muted-foreground focus:border-gold focus:outline-none";
+
+const labelClass =
+  "mb-2 block text-xs font-semibold uppercase tracking-widest text-cream";
+
+const errorClass = "text-xs text-gold";
 
 export function ContactForm() {
-  const [status, setStatus] = useState<FormStatus>("idle");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+  const [fileName, setFileName] = useState<string | null>(null);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setStatus("loading");
-    setErrorMessage("");
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm<ContactFormValues>({
+    resolver: zodResolver(contactSchema),
+  });
 
-    const form = event.currentTarget;
-    const formData = new FormData(form);
+  async function onSubmit(data: ContactFormValues) {
+    setSubmitError(null);
 
-    try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: formData.get("name"),
-          email: formData.get("email"),
-          rugType: formData.get("rugType"),
-          budget: formData.get("budget"),
-          message: formData.get("message"),
-        }),
-      });
+    const response = await fetch("/api/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        ...data,
+        referenceFileName: fileName ?? undefined,
+      }),
+    });
 
-      const data = await response.json();
+    const result = (await response.json().catch(() => null)) as {
+      error?: string;
+      code?: string;
+    } | null;
 
-      if (!response.ok) {
-        if (data.code === "UNCONFIGURED") {
-          setStatus("unconfigured");
-          return;
-        }
-        throw new Error(data.error || "Something went wrong.");
-      }
-
-      setStatus("success");
-      form.reset();
-    } catch (error) {
-      setStatus("error");
-      setErrorMessage(
-        error instanceof Error ? error.message : "Failed to send message."
+    if (!response.ok) {
+      setSubmitError(
+        result?.error ?? `Could not send your request. Email us at ${SITE_EMAIL}.`
       );
+      return;
     }
+
+    setSubmitted(true);
+    reset();
+    setFileName(null);
+  }
+
+  if (submitted) {
+    return (
+      <motion.div
+        initial={{ opacity: 0, scale: 0.96 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="border border-gold/30 bg-surface p-10 text-center"
+      >
+        <CheckCircle2 className="mx-auto mb-4 h-12 w-12 text-gold" />
+        <h3 className="font-display text-3xl tracking-wide text-cream">
+          REQUEST RECEIVED
+        </h3>
+        <p className="mt-3 text-muted-foreground">
+          We&apos;ll review your project and respond within 24–48 hours.
+        </p>
+        <Button
+          variant="outline"
+          className="mt-8"
+          onClick={() => {
+            setSubmitted(false);
+            setSubmitError(null);
+          }}
+        >
+          Submit Another
+        </Button>
+      </motion.div>
+    );
   }
 
   return (
     <form
-      onSubmit={handleSubmit}
-      className="space-y-5 border border-border bg-surface p-8"
+      onSubmit={handleSubmit(onSubmit)}
+      className="border border-border bg-surface p-6 sm:p-10"
+      noValidate
     >
-      <div>
-        <label htmlFor="name" className="mb-2 block text-xs font-semibold uppercase tracking-widest text-cream">
-          Name
-        </label>
-        <input
-          id="name"
-          name="name"
-          type="text"
-          required
-          className="w-full border border-border bg-background px-4 py-3 text-cream placeholder:text-muted-foreground focus:border-gold focus:outline-none"
-          placeholder="Your name"
-        />
-      </div>
+      <div className="grid gap-6 sm:grid-cols-2">
+        <div>
+          <label htmlFor="name" className={labelClass}>
+            Name
+          </label>
+          <input
+            id="name"
+            className={fieldClass}
+            placeholder="Your name"
+            {...register("name")}
+          />
+          {errors.name && (
+            <p className={errorClass}>{errors.name.message}</p>
+          )}
+        </div>
 
-      <div>
-        <label htmlFor="email" className="mb-2 block text-xs font-semibold uppercase tracking-widest text-cream">
-          Email
-        </label>
-        <input
-          id="email"
-          name="email"
-          type="email"
-          required
-          className="w-full border border-border bg-background px-4 py-3 text-cream placeholder:text-muted-foreground focus:border-gold focus:outline-none"
-          placeholder="you@example.com"
-        />
-      </div>
+        <div>
+          <label htmlFor="email" className={labelClass}>
+            Email
+          </label>
+          <input
+            id="email"
+            type="email"
+            className={fieldClass}
+            placeholder="you@email.com"
+            {...register("email")}
+          />
+          {errors.email && (
+            <p className={errorClass}>{errors.email.message}</p>
+          )}
+        </div>
 
-      <div>
-        <label htmlFor="rugType" className="mb-2 block text-xs font-semibold uppercase tracking-widest text-cream">
-          What kind of rug?
-        </label>
-        <input
-          id="rugType"
-          name="rugType"
-          type="text"
-          className="w-full border border-border bg-background px-4 py-3 text-cream placeholder:text-muted-foreground focus:border-gold focus:outline-none"
-          placeholder="e.g. Saints logo, car mat, custom shape"
-        />
-      </div>
+        <div>
+          <label htmlFor="phone" className={labelClass}>
+            Phone
+          </label>
+          <input
+            id="phone"
+            type="tel"
+            className={fieldClass}
+            placeholder="(478) 000-0000"
+            {...register("phone")}
+          />
+          {errors.phone && (
+            <p className={errorClass}>{errors.phone.message}</p>
+          )}
+        </div>
 
-      <div>
-        <label htmlFor="budget" className="mb-2 block text-xs font-semibold uppercase tracking-widest text-cream">
-          Budget range
-        </label>
-        <select
-          id="budget"
-          name="budget"
-          className="w-full border border-border bg-background px-4 py-3 text-cream focus:border-gold focus:outline-none"
-        >
-          <option value="">Select a range</option>
-          {BUDGET_RANGES.map((range) => (
-            <option key={range} value={range}>
-              {range}
+        <div>
+          <label htmlFor="size" className={labelClass}>
+            Desired Rug Size
+          </label>
+          <select id="size" className={fieldClass} {...register("size")} defaultValue="">
+            <option value="" disabled>
+              Select size
             </option>
-          ))}
-        </select>
+            {RUG_SIZES.map((size) => (
+              <option key={size} value={size}>
+                {size}
+              </option>
+            ))}
+          </select>
+          {errors.size && (
+            <p className={errorClass}>{errors.size.message}</p>
+          )}
+        </div>
+
+        <div className="sm:col-span-2">
+          <label htmlFor="description" className={labelClass}>
+            Project Description
+          </label>
+          <textarea
+            id="description"
+            rows={4}
+            className={cn(fieldClass, "resize-none")}
+            placeholder="Describe your vision — subject, colors, style, references..."
+            {...register("description")}
+          />
+          {errors.description && (
+            <p className={errorClass}>{errors.description.message}</p>
+          )}
+        </div>
+
+        <div>
+          <label htmlFor="budget" className={labelClass}>
+            Budget Range
+          </label>
+          <select id="budget" className={fieldClass} {...register("budget")} defaultValue="">
+            <option value="" disabled>
+              Select budget
+            </option>
+            {BUDGET_RANGES.map((range) => (
+              <option key={range} value={range}>
+                {range}
+              </option>
+            ))}
+          </select>
+          {errors.budget && (
+            <p className={errorClass}>{errors.budget.message}</p>
+          )}
+        </div>
+
+        <div>
+          <label htmlFor="reference" className={labelClass}>
+            Upload Reference Image
+          </label>
+          <label
+            htmlFor="reference"
+            className={cn(
+              "flex cursor-pointer flex-col items-center justify-center border-2 border-dashed border-border bg-background px-4 py-8 transition-colors hover:border-gold"
+            )}
+          >
+            <Upload className="mb-2 h-6 w-6 text-gold" />
+            <span className="text-sm text-muted-foreground">
+              {fileName ?? "Click to upload reference"}
+            </span>
+            <input
+              id="reference"
+              type="file"
+              accept="image/*"
+              className="sr-only"
+              onChange={(e) => setFileName(e.target.files?.[0]?.name ?? null)}
+            />
+          </label>
+        </div>
       </div>
 
-      <div>
-        <label htmlFor="message" className="mb-2 block text-xs font-semibold uppercase tracking-widest text-cream">
-          Message
-        </label>
-        <textarea
-          id="message"
-          name="message"
-          required
-          rows={5}
-          className="w-full resize-none border border-border bg-background px-4 py-3 text-cream placeholder:text-muted-foreground focus:border-gold focus:outline-none"
-          placeholder="Describe your design, size, colors, or any questions..."
-        />
-      </div>
+      {submitError && (
+        <p className="mt-6 text-sm text-gold" role="alert">
+          {submitError}
+        </p>
+      )}
 
-      <button
+      <Button
         type="submit"
-        disabled={status === "loading"}
-        className="w-full border border-gold bg-gold px-8 py-4 text-sm font-semibold uppercase tracking-widest text-background transition-all hover:bg-gold/90 disabled:cursor-not-allowed disabled:opacity-60"
+        variant="gold"
+        size="lg"
+        className="mt-8 w-full"
+        disabled={isSubmitting}
       >
-        {status === "loading" ? "Sending..." : "Send Message"}
-      </button>
-
-      {status === "success" && (
-        <p className="text-center text-sm text-green-400">
-          Message sent! We&apos;ll be in touch soon.
-        </p>
-      )}
-
-      {status === "unconfigured" && (
-        <p className="text-center text-sm text-amber-400">
-          Contact form is not configured yet. Please reach out via social media
-          in the meantime.
-        </p>
-      )}
-
-      {status === "error" && (
-        <p className="text-center text-sm text-red-400">{errorMessage}</p>
-      )}
+        {isSubmitting ? "Submitting..." : "Submit Request"}
+      </Button>
     </form>
   );
 }

@@ -46,16 +46,13 @@ export function GalleryProvider({ children }: { children: React.ReactNode }) {
           >
             <Image
               src={active.image}
-              alt={active.title}
+              alt="Custom tufted rug by Stubbs' Rugz"
               width={1200}
               height={1200}
               className="max-h-[70vh] w-auto rounded-none object-contain"
             />
             <div className="mt-4 border border-border bg-surface p-6">
-              <h3 className="font-display text-2xl tracking-wide text-cream">
-                {active.title.toUpperCase()}
-              </h3>
-              <p className="mt-2 text-sm text-muted-foreground">
+              <p className="font-display text-xl tracking-wide text-cream">
                 {active.size} · {active.price}
               </p>
             </div>

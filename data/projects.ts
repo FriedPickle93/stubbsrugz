@@ -1,14 +1,9 @@
 import fs from "fs";
 import path from "path";
-import {
-  PRICING_TIERS,
-  PROJECT_CATEGORIES,
-} from "@/lib/constants";
+import { PRICING_TIERS } from "@/lib/constants";
 
 export type Project = {
   slug: string;
-  title: string;
-  category: string;
   size: string;
   price: string;
   image: string;
@@ -38,12 +33,9 @@ export function getProjects(): Project[] {
       const size = SIZES[index % SIZES.length];
       const price =
         PRICING_TIERS.find((tier) => tier.size === size)?.price ?? "Quote";
-      const category = PROJECT_CATEGORIES[index % PROJECT_CATEGORIES.length];
 
       return {
         slug: slugify(file),
-        title: category,
-        category,
         size,
         price,
         image: `/images/gallery/${file}`,
