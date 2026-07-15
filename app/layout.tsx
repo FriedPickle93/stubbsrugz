@@ -1,14 +1,24 @@
 import type { Metadata } from "next";
-import { Geist, UnifrakturMaguntia } from "next/font/google";
+import { Bebas_Neue, Inter, Pacifico } from "next/font/google";
+import { GalleryProvider } from "@/components/gallery/gallery-provider";
+import { SiteFooter } from "@/components/layout/site-footer";
+import { SiteHeader } from "@/components/layout/site-header";
+import { SITE_NAME, SITE_TAGLINE } from "@/lib/constants";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
 });
 
-const unifraktur = UnifrakturMaguntia({
-  variable: "--font-display",
+const bebas = Bebas_Neue({
+  variable: "--font-bebas",
+  weight: "400",
+  subsets: ["latin"],
+});
+
+const pacifico = Pacifico({
+  variable: "--font-script",
   weight: "400",
   subsets: ["latin"],
 });
@@ -17,15 +27,16 @@ export const metadata: Metadata = {
   metadataBase: new URL(
     process.env.VERCEL_URL
       ? `https://${process.env.VERCEL_URL}`
-      : "http://localhost:3000"
+      : "https://stubbsrugz.vercel.app"
   ),
-  title: "Stubbs' Rugs | Custom Hand-Tufted Rugs",
-  description:
-    "Custom hand-tufted rugs made to order. Sports, automotive, pop culture, and die-cut designs by Stubbs' Rugs.",
+  title: {
+    default: `${SITE_NAME} | Custom Hand-Tufted Rugs`,
+    template: `%s | ${SITE_NAME}`,
+  },
+  description: SITE_TAGLINE,
   openGraph: {
-    title: "Stubbs' Rugs | Custom Hand-Tufted Rugs",
-    description:
-      "Custom hand-tufted rugs made to order. Sports, automotive, pop culture, and die-cut designs.",
+    title: `${SITE_NAME} | Custom Hand-Tufted Rugs`,
+    description: SITE_TAGLINE,
     images: ["/images/logo.jpg"],
   },
 };
@@ -38,10 +49,14 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${unifraktur.variable} h-full scroll-smooth antialiased`}
+      className={`${inter.variable} ${bebas.variable} ${pacifico.variable} h-full`}
     >
-      <body className="min-h-full flex flex-col bg-[var(--bg-primary)] text-[var(--text-primary)]">
-        {children}
+      <body className="min-h-full font-sans">
+        <GalleryProvider>
+          <SiteHeader />
+          <main>{children}</main>
+          <SiteFooter />
+        </GalleryProvider>
       </body>
     </html>
   );

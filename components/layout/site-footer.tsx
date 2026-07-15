@@ -1,0 +1,88 @@
+import Link from "next/link";
+import { BrandLogo } from "@/components/brand/brand-logo";
+import { BrandMascot } from "@/components/brand/brand-mascot";
+import {
+  CASH_APP,
+  NAV_LINKS,
+  PAYMENT_METHODS,
+  SITE_EMAIL,
+  SITE_INSTAGRAM,
+  SITE_LOCATION,
+  SITE_NAME,
+  SITE_PHONE,
+} from "@/lib/constants";
+
+export function SiteFooter() {
+  return (
+    <footer className="border-t border-border bg-surface">
+      <div className="section-padding mx-auto max-w-7xl">
+        <div className="grid gap-12 lg:grid-cols-[1.2fr_1fr_1fr]">
+          <div>
+            <BrandLogo stacked size="lg" />
+            <p className="mt-4 max-w-sm text-sm leading-relaxed text-muted-foreground">
+              Custom hand-tufted rug studio. We make bold one-of-one pieces —
+              sports teams, automotive, pop culture, die-cut shapes, and fully
+              custom commissions you can hang or walk on.
+            </p>
+            <div className="mt-6">
+              <BrandMascot size="md" animated />
+            </div>
+          </div>
+
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-widest text-gold">
+              Studio
+            </p>
+            <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
+              <li>{SITE_LOCATION}</li>
+              <li>
+                <a href={`mailto:${SITE_EMAIL}`} className="hover:text-blue">
+                  {SITE_EMAIL}
+                </a>
+              </li>
+              <li>
+                <a href={`tel:${SITE_PHONE.replace(/\D/g, "")}`} className="hover:text-blue">
+                  {SITE_PHONE}
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-blue">
+                  {SITE_INSTAGRAM}
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-widest text-gold">
+              Payments
+            </p>
+            <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
+              {PAYMENT_METHODS.map((method) => (
+                <li key={method}>{method}</li>
+              ))}
+              <li>Cash App: {CASH_APP}</li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="mt-12 flex flex-col gap-4 border-t border-border pt-8 sm:flex-row sm:items-center sm:justify-between">
+          <nav className="flex flex-wrap gap-6">
+            {NAV_LINKS.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="text-xs uppercase tracking-widest text-muted-foreground hover:text-cream"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+          <p className="text-xs text-muted-foreground">
+            © {new Date().getFullYear()} {SITE_NAME}
+          </p>
+        </div>
+      </div>
+    </footer>
+  );
+}

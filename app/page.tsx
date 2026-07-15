@@ -1,20 +1,23 @@
-import About from "@/components/About";
-import ContactForm from "@/components/ContactForm";
-import Footer from "@/components/Footer";
-import Gallery from "@/components/Gallery";
-import Hero from "@/components/Hero";
-import { getGalleryImages } from "@/lib/gallery";
+import { AboutSection } from "@/components/home/about-section";
+import { CTASection } from "@/components/home/cta-section";
+import { FeaturedWorkSection } from "@/components/home/featured-work-section";
+import { HeroSection } from "@/components/home/hero-section";
+import { ProcessSection } from "@/components/home/process-section";
+import { WhyChooseSection } from "@/components/home/why-choose-section";
+import { getFeaturedProjects, getProjects } from "@/data/projects";
 
 export default function Home() {
-  const images = getGalleryImages();
+  const featured = getFeaturedProjects();
+  const projects = getProjects();
 
   return (
     <>
-      <Hero />
-      <Gallery images={images} />
-      <About />
-      <ContactForm />
-      <Footer />
+      <HeroSection featuredProjects={featured} />
+      <AboutSection />
+      <ProcessSection />
+      <FeaturedWorkSection projects={projects} />
+      <WhyChooseSection />
+      <CTASection />
     </>
   );
 }

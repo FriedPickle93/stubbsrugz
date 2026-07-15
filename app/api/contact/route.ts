@@ -5,6 +5,7 @@ type ContactPayload = {
   name?: string;
   email?: string;
   rugType?: string;
+  budget?: string;
   message?: string;
 };
 
@@ -33,6 +34,7 @@ export async function POST(request: Request) {
   const name = body.name?.trim();
   const email = body.email?.trim();
   const rugType = body.rugType?.trim() || "Not specified";
+  const budget = body.budget?.trim() || "Not specified";
   const message = body.message?.trim();
 
   if (!name || !email || !message) {
@@ -59,6 +61,7 @@ export async function POST(request: Request) {
         `Name: ${name}`,
         `Email: ${email}`,
         `Rug type: ${rugType}`,
+        `Budget: ${budget}`,
         "",
         "Message:",
         message,
