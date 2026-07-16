@@ -5,11 +5,11 @@ import {
   NAV_LINKS,
   PAYMENT_METHODS,
   SITE_EMAIL,
-  SITE_INSTAGRAM,
   SITE_LOCATION,
   SITE_NAME,
   SITE_PHONE,
   SITE_TAGLINE,
+  SOCIAL_LINKS,
 } from "@/lib/constants";
 
 export function SiteFooter() {
@@ -40,11 +40,18 @@ export function SiteFooter() {
                   {SITE_PHONE}
                 </a>
               </li>
-              <li>
-                <a href="#" className="hover:text-gold">
-                  {SITE_INSTAGRAM}
-                </a>
-              </li>
+              {SOCIAL_LINKS.map((link) => (
+                <li key={link.href}>
+                  <a
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-gold"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
 

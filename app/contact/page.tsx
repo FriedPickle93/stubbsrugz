@@ -6,9 +6,9 @@ import {
   CASH_APP,
   PAYMENT_METHODS,
   SITE_EMAIL,
-  SITE_INSTAGRAM,
   SITE_LOCATION,
   SITE_PHONE,
+  SOCIAL_LINKS,
   STUDIO_POLICIES,
 } from "@/lib/constants";
 
@@ -50,12 +50,23 @@ export default function ContactPage() {
                   {SITE_PHONE}
                 </a>
               </p>
-              <p>
-                <span className="text-cream">Instagram:</span>{" "}
-                <a href="#" className="hover:text-gold">
-                  {SITE_INSTAGRAM}
-                </a>
-              </p>
+              <div className="space-y-2">
+                <p className="text-cream">Follow us:</p>
+                <ul className="space-y-2">
+                  {SOCIAL_LINKS.map((link) => (
+                    <li key={link.href}>
+                      <a
+                        href={link.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:text-gold"
+                      >
+                        {link.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
               <p>
                 <span className="text-cream">Payments:</span>{" "}
                 {PAYMENT_METHODS.join(" · ")} · Cash App {CASH_APP}

@@ -5,9 +5,15 @@ export const SITE_TAGLINE =
   "Handcrafted custom rugs that make a statement. From business logos to anime, sports teams, and one-of-a-kind artwork — every rug is handmade with premium materials.";
 export const SITE_EMAIL = process.env.CONTACT_EMAIL ?? "stubbsrugz@gmail.com";
 export const SITE_PHONE = "478-244-XXXX";
-export const SITE_INSTAGRAM = "@STUBBSRUGZ";
+export const SITE_INSTAGRAM = "@reallacboi";
 export const SITE_LOCATION = "Warner Robins, GA";
 export const CASH_APP = "Contact for details";
+
+export const SOCIAL_LINKS = [
+  { label: "Facebook", href: "https://www.facebook.com/dontay.stubbs" },
+  { label: "Instagram", href: "https://www.instagram.com/reallacboi/" },
+  { label: "TikTok", href: "https://www.tiktok.com/@dontaystubbs" },
+] as const;
 
 export const BRAND_LOGO = "/images/logo.png";
 
